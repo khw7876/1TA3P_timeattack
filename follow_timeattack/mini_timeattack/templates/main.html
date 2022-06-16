@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <p>followers </p> 
+    {%for follow in follows %}
+    <a href="{% url 'follow' {{follow.email}} %}">{{follow.email}}</a>
+    {%endfor%}
+    <p>users </p> 
+    {%for unfollow in unollows %}
+    <a href="{% url 'follow' {{unfollow.email}} %}">{{unfollow.email}}</a>
+    {%endfor%}
+
+    
+</body>
+</html>
