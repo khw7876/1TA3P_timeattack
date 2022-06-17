@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post" id="login" action={% url 'login' %} enctype="multipart/form-data">
+    <form action = "{% url 'sign_in' %} " method="post">
         {% csrf_token %}
-        <input type="username" name="username"/>
-        <input type="password" name="password"/>
-        <button form="login" type="submit">로그인하기</button>
+        <input type="username", name="username"/>
+        <input type="password", name="password"/>
+        <button type="submit">로그인하기</button>
     </form>
 </body>
 </html>
