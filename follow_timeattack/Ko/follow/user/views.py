@@ -4,37 +4,36 @@ from django.contrib import auth
 from .models import UserModel
 # Create your views here.
 
-
 def home(request):
     return render(request, 'user/sign_in.html')
 
-def login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        login_user = auth.authenticate(request, username = username, password= password)
-        if login_user:
-            auth.login(request, login_user)
-            return redirect('/user/follow')
-        return redirect('/user/')
-    print("실패")
-    return redirect('/user/')
-
+def sign_in(request):
+    if request.method =="GET":
+        return render(request, 'user/sign_in.html')
+    username = request.POST.get('username', None)
+    password = request.POST.get('password', None)
+    login_user = auth.authenticate(request, username=username, password=password)
+    if login_user:
+        auth.login(request, login_user)
+        return render (request, 'user/follow.html')
+    return redirect('/user')
 
 def follow(request):
+    user = request.user
     if request.method == "GET":
-        user = UserModel.objects.all()
-        my_follows = UserModel.objects.filter(followee = request.user).username
-        un_follows = UserModel.objects.filter(followee = request.user).username.exists()
+        my_follows = UserModel.objects.filter(followee = user)
+        not_follow_users = UserModel.objects.all().exclude(followee=user).exclude(id=user.id)
 
-        context = {my_follows, un_follows}
+        return render(request, 'user/follow.html', {"my_follows" : my_follows, "not_follow_users" : not_follow_users})
 
-        for us in user:
-            print(us)
-        return render(request, 'user/follow.html', context)
+def click_user(request, user_id):
+    user = request.user
+    clicked_user = UserModel.objects.get(id=user_id)
+    #클릭한 유저의 id로 조회를 하는데,
+    #그 유저의 followee에 내가 있는가.
 
-def click_follow(request, username):
-    if request.moehod == "POST":
-        clicked_user = 
-
-    
+    if user.follow.filter(id = clicked_user.id):
+        user.follow.remove(clicked_user)
+        return redirect('/user/follow')
+    user.follow.add(clicked_user)
+    return redirect('/user/follow')

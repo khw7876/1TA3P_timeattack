@@ -7,11 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-{% for my_follow in my_follows %}
-<div>follow : <a href = {% url 'click_follow' myfollow.username %} ></div>
-{% endfor %}
-{% for un_follow in un_follows %}
-<div>un_follow : <a href = {% url 'click_follow' unfollow.username %} >{{un_follow}}</a></div>
-{% endfor %}
+    <div class = "follow">
+        my_follow :
+        {% for my_follow in my_follows %}
+        <div> <a href = "{% url 'click_user' my_follow.id %}" >{{my_follow.username}}</div>
+        {% endfor %}
+    </div>
+    <div class= "not_follow">
+    not_follow_user :
+    {% for not_follow_user in not_follow_users %}
+    <div> <a href = "{% url 'click_user' not_follow_user.id %}" >{{not_follow_user}}</a></div>
+    {% endfor %}
+    </div>
 </body>
 </html>
