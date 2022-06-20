@@ -12,11 +12,9 @@ db.sqlite3
 db.sqlite3-journal
 media
 
-<<<<<<< HEAD
+
 config.py
 venv
-=======
->>>>>>> 253157b7c2285ba9811c8646cc9fa6b11be3feb8
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
 # <django-project-name>/staticfiles/
@@ -177,8 +175,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-<<<<<<< HEAD
-=======
 ### macOS ###
 # General
 .DS_Store
@@ -459,13 +455,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-<<<<<<< HEAD
-
-
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,python,django
-=======
-# End of https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,pycharm,windows,macos
-
-# 컨피그 파일
-config.py
->>>>>>> 253157b7c2285ba9811c8646cc9fa6b11be3feb8
