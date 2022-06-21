@@ -20,11 +20,7 @@ class Posting(APIView):
         content = request.data.get('content', '')
         tag_names = request.data.get('tag_names', '')
         
-        # tag_names = [TagModel.objects.get_or_create(name = tag_name)for tag_name in tag_names]
-        tag_name_list = []
-        for tag_name in tag_names:
-            tag_name_obj,_ = TagModel.objects.get_or_create(name = tag_name)
-            tag_name_list.append(tag_name_obj)
+        tag_name_list = [TagModel.objects.get_or_create(name = tag_name)[0] for tag_name in tag_names]
 
         new_post = PostModel.objects.create(user=user, content=content)
         new_post.tag_name.add(*tag_name_list)
