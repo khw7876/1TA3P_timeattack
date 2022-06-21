@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from . models import User, Content
+from post.models import Content
 from django.contrib.auth import login, authenticate
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from user.serializers import UserSerializer
+from post.models import TagModel
 
 class Login_View(APIView):
     def post(self, request): 
@@ -25,13 +26,18 @@ class Content_View(APIView):
         user = request.user 
         title = request.data.get('title', '') 
         content = request.data.get('content', '')
-        post = Content(
+        tag_names = request.data.get('tag_name','')
+        new_post = Content.objects.create(
             user = user,
             title = title,
             content = content,
             )
-        post.save()
-        print(title,content)
+        tag_objects = []
+        for tag_name in tag_names:
+            tag_object,_ = TagModel.objects.get_or_create(tag_name=tag_name)
+            tag_objects.append(tag_object)
+        new_post.tag_name.add(*tag_objects)
+        new_post.save()
         return Response({'message': '작성 성공!'}, status=status.HTTP_200_OK) 
 
     def put(self, request, id=id):
