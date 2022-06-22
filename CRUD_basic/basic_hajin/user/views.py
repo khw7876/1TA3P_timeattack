@@ -38,7 +38,7 @@ class Content_View(APIView):
             tag_objects.append(tag_object)
         new_post.tag_name.add(*tag_objects)
         new_post.save()
-        return Response({'message': '작성 성공!'}, status=status.HTTP_200_OK) 
+        return Response({'message': '작12성 성공!'}, status=status.HTTP_200_OK) 
 
     def put(self, request, id=id):
         title = request.data.get('title', '') 
