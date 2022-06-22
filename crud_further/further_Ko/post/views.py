@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import permissions
 from .models import PostModel
+from .models import Tag as TagModel
 from rest_framework import status
 
 from user.serializers import UserSerializer, PostSerializer
@@ -10,16 +11,18 @@ from user.serializers import UserSerializer, PostSerializer
 # Create your views here.
 class PostView(APIView):
     # 글 조회
-    def get(self, request):
+    def get(self, request, post_id = None):
         user = request.user
         serialized_user_data = UserSerializer(user).data
         return Response(serialized_user_data, status = status.HTTP_200_OK)
 
-    def post(self, request):
+    def post(self, request, post_id = None):
         user = request.user
         contents = request.data.get("contents", "")
-
-        article = PostModel(author=user, contents=contents)
+        tag_names = request.data.get('tag_names','')
+        tag_name_list = [TagModel.objects.get(name = tag_name) for tag_name in tag_names]
+        article = PostModel.objects.create(author=user, contents=contents)
+        article.tag.add(*tag_name_list)
         article.save()
 
         return Response({"message":"글 작성 완료!"})
