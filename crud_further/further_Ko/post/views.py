@@ -20,7 +20,7 @@ class PostView(APIView):
         user = request.user
         contents = request.data.get("contents", "")
         tag_names = request.data.get('tag_names','')
-        tag_name_list = [TagModel.objects.get(name = tag_name) for tag_name in tag_names]
+        tag_name_list = [TagModel.objects.get_or_create(name = tag_name)[0] for tag_name in tag_names]
         article = PostModel.objects.create(author=user, contents=contents)
         article.tag.add(*tag_name_list)
         article.save()
